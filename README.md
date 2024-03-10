@@ -5,17 +5,19 @@
     <img src="Screenshots/F1_Logo.png" alt="ACR">
 </div>
 
-<h3>Project Overview:</h3>
+## Project Overview
+
 This project aims to provide a data analysis solution for Formula-1 race results using Azure Databricks. This is an ETL pipeline to ingest Formula 1 motor racing data, transform and load it into our data warehouse for reporting and analysis purposes. The data is sourced from ergast.com, a website dedicated to Formula 1 statistics, and is stored in Azure Datalake Gen2 storage. Data transformation and analysis were performed using Azure Databricks. The entire process is orchestrated using Azure Data Factory.
 
-<h3>Formula1 Overview</h3>
+## Formula1 Overview
+
 Formula 1 (F1) is the top tier of single-seater auto racing worldwide, governed by the FIA. It features high-tech, powerful cars with hybrid engines. Every season happens once a year, each race happens over weekends (Friday to Sunday). Each race is conducted in individual circuits. 10 Teams/Constructors will participate. Two Drivers will be assigned in a team. The season includes 20-23 races (Grands Prix) held in various countries. Safety is a priority with strict regulations and constant advancements. Pit stops for tire changes and adjustments are common. There will be a qualifying round conducted on Saturday to decide the grid positions of drivers for the Sunday match. Each race contains 50-70 laps. Pitstops will be available to change tires or cars. Race results include driver standings and constructor standings. The driver that tops the driver's standings becomes the drivers' champion and the team that tops the constructor standings becomes the constructors' champion.
 
-<h3>Architecture diagram</h3>
+## Architecture diagram
 
 <img src="https://github.com/jaykay04/Formula1_Big_Data_Project_Using_Azure_Databricks/blob/main/Images/solution%20architecture.png">
 
-# ER Diagram:
+## ER Diagram:
 
 The structure of the database is shown in the following ER Diagram and explained in the [Database User Guide](http://ergast.com/docs/f1db_user_guide.txt)
 ![ERDiagram](http://ergast.com/images/ergast_db.png)
@@ -28,19 +30,19 @@ We are referring to open-source data from the website Ergast Developer API. Data
 | ------------- | ------------- |
 | Circuits  | CSV  |
 | Races | CSV |
-| Constructors  | Single Line JSON  |
-| Drivers | Single Line Nested JSON |
-| Results  | Single Line JSON  |
-| PitStops | Multi Line JSON |
+| Constructors  | CSV  |
+| Drivers | CSV |
+| Results  | CSV  |
+| PitStops | Multi Line CSV |
 | LapTimes  | Split CSV Files  |
-| Qualifying | Split Multi Line JSON Files | 
+| Qualifying | Split Multi Line CSV Files | 
 
-#### Execution Overview:
+## Execution Overview:
 - Azure Data Factory (ADF) is responsible for the execution of Azure Datarbicks notebooks as well as monitoring them. We import data from Ergast API to Azure Data Lake Storage Gen2 (ADLS). The raw data is stored in the container at **Bronze zone** (landing zone).
 - Data in the Bronze zone is ingested using Azure Databricks notebook. The data is transformed into delta tables using upsert functionality. ADF then uploads the data to ADLS **Silver zone** (standardization zone). 
 - Ingested data in **Silver zone** is transformed using Azure Databricks SQL notebook. Tables are joined and aggregated for analytical and visualization purposes. The output is loaded to the **Gold zone** (analytical zone).
 
-#### ETL pipeline:
+## ETL pipeline:
 ETL flow comprises two parts:
 - Ingestion: Process data from **Bronze zone** to **Silver zone**
 - Transformation: Process data from **Silver zone** to **Gold zone**
